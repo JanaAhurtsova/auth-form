@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { resolver } from '@/resolver/resolverLogin';
 import { MyInput } from '../input/input';
 import style from './loginForm.module.scss';
 import { FormValues } from './type';
-import { resolver } from '@/resolver/resolverLogin';
 
 export function Login() {
   const {
