@@ -4,7 +4,7 @@
   border: .1px solid;
   min-width: 320px;
   width: 30%;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 7px;
   background-color: rgb(178, 199, 205, .4);
   filter: blur();
@@ -41,4 +41,12 @@
 .account {
   font-size: .7rem;
   margin-top: 0.3rem;
+}
+
+.server {
+  background-color: rgb(245, 146, 146);
+  position: absolute;
+  top: .2rem;
+  padding: .5rem;
+  border-radius: .3rem;
 }

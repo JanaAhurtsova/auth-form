@@ -24,9 +24,8 @@ export const handleErrorSignIn = (values: FormValues) => {
 
   if(Object.keys(emailErrors).length) {
     errors.email = emailErrors;
-    console.log(errors);
   }
-    console.log(errors);
+
   if (!values.password.trim()) {
     errors.password = generateError(ErrorsType.REQUIRED, errorsText.password);
   }
@@ -37,7 +36,11 @@ export const handleErrorSignIn = (values: FormValues) => {
 export const handleErrorSignUp = (values: FormValues) => {
   const errors = {} as ErrorsForm;
 
-  errors.email = validateEmail(values.email);
+  const emailErrors = validateEmail(values.email);
+
+  if (Object.keys(emailErrors).length) {
+    errors.email = emailErrors;
+  }
 
   if (!values.password.trim()) {
     errors.password = generateError(ErrorsType.REQUIRED, errorsText.password);

@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
 
 import { Email } from '@/components/input/email/email';
 import { Password } from '@/components/input/password/password';
 import { resolver } from '@/resolver/resolverSignUp';
-import { registerWithEmailAndPassword } from '@/firebase/firebase';
+import { auth, db } from '@/firebase/firebase';
+import { errorsText } from '@/manager/errors/errors';
 import style from '../auth.module.scss';
 import { FormValues } from '../signin/type';
 
 export function SignUp() {
     const [errorServer, setErrorServer] = useState('');
+    const navigate = useNavigate();
+
     const {
       handleSubmit,
       register,
@@ -22,19 +27,25 @@ export function SignUp() {
     });
 
     const onSubmit = handleSubmit((userForm) => {
-      console.log(userForm)
-      try {
-        registerWithEmailAndPassword(userForm.email, userForm.password);
-        setErrorServer('');
-        alert('Success!');
-      } catch (error) {
-        setErrorServer('Invalid email or password');
-      }
+      createUserWithEmailAndPassword(auth, userForm.email, userForm.password)
+        .then((userCredential) => {
+          const { user } = userCredential;
+          addDoc(collection(db, 'users'), {
+            uid: user.uid,
+            authProvider: 'local',
+            email: user.email,
+          });
+          navigate('/');
+          setErrorServer('');
+        })
+        .catch(() => {
+          setErrorServer(errorsText.signUpError);
+        });
     });
 
     return (
       <div className={style.container}>
-        {errorServer ? <span>{errorServer}</span> : ''}
+        {errorServer && <div className={style.server}>{errorServer}</div>}
         <h1>Sign Up</h1>
         <h4 className={style.subtitle}>Sign in with your email and password</h4>
         <form className={style.form} onSubmit={onSubmit}>
