@@ -47,7 +47,6 @@ export function SignUp() {
       <div className={style.container}>
         {errorServer && <div className={style.server}>{errorServer}</div>}
         <h1>Sign Up</h1>
-        <h4 className={style.subtitle}>Sign in with your email and password</h4>
         <form className={style.form} onSubmit={onSubmit}>
           <Email register={register} error={errors.email} />
           <Password
