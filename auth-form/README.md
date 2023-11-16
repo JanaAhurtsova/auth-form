@@ -1,4 +1,5 @@
 # Auth-form
+Authentication with email and password
 ## Running and start
 * Clone this repo: ```$ git clone https://github.com/JanaAhurtsova/auth-form.git```
 * Go to downloaded folder: ```$ cd auth-form```
@@ -8,3 +9,4 @@
 * Start app: ```$ npm run start```
 
 ## Deploy
+[Auth-form](https://auth-form-eosin.vercel.app/)
