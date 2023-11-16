@@ -58,7 +58,7 @@ export function SignIn() {
       <p className={style.account}>
         Do not have an account? <Link to="/signup">SIGN UP NOW</Link>
       </p>
-      {success && createPortal(<Popup email={member} />, document.getElementById('root')!)}
+      {success && createPortal(<Popup email={member} setSuccess={setSuccess} />, document.getElementById('root')!)}
     </div>
   );
 }
