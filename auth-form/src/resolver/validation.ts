@@ -1,4 +1,4 @@
-import { ErrorsEmail, ErrorsForm, FormValues } from "@/components/login/type";
+import { ErrorsEmail, ErrorsForm, FormValues } from "@/pages/signin/type";
 import { ErrorsType, errorsText } from "@/manager/errors/errors";
 import { generateError } from "@/manager/errors/generateErrors";
 import { Pattern } from "@/manager/pattern/pattern";
@@ -6,22 +6,27 @@ import { Pattern } from "@/manager/pattern/pattern";
 const validateEmail = (email: string) => {
   let errors = {} as ErrorsEmail;
 
-  if (!email.trim()) {
-    errors = generateError(ErrorsType.REQUIRED, errorsText.email);
-  }
-
   if (!RegExp(Pattern.email).test(email)) {
     errors = generateError(ErrorsType.PATTERN, errorsText.invalidEmail);
+  }
+
+  if (!email.trim()) {
+    errors = generateError(ErrorsType.REQUIRED, errorsText.email);
   }
 
   return errors;
 }
 
-export const handleErrorLogin = (values: FormValues) => {
+export const handleErrorSignIn = (values: FormValues) => {
   const errors = {} as ErrorsForm;
 
-  errors.email = validateEmail(values.email);
+  const emailErrors = validateEmail(values.email);
 
+  if(Object.keys(emailErrors).length) {
+    errors.email = emailErrors;
+    console.log(errors);
+  }
+    console.log(errors);
   if (!values.password.trim()) {
     errors.password = generateError(ErrorsType.REQUIRED, errorsText.password);
   }
@@ -29,7 +34,7 @@ export const handleErrorLogin = (values: FormValues) => {
   return errors;
 };
 
-export const handleErrorRegister = (values: FormValues) => {
+export const handleErrorSignUp = (values: FormValues) => {
   const errors = {} as ErrorsForm;
 
   errors.email = validateEmail(values.email);
@@ -41,7 +46,7 @@ export const handleErrorRegister = (values: FormValues) => {
   if (!RegExp(Pattern.password).test(values.password)) {
     errors.password = generateError(
       ErrorsType.PATTERN,
-      errorsText.invalidPasswordRegistration
+      errorsText.invalidPasswordSignUp
     );
   }
 

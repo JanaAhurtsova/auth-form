@@ -16,6 +16,9 @@
         "./src/*"
       ]
     },
+    "types": [
+      "vite/client"
+    ],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
